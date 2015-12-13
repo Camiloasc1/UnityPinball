@@ -22,6 +22,10 @@ public class SpeedLimit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void LateUpdate()
+    {
         if (rb.velocity.magnitude > maxSpeed)
         {
             //rb.velocity = rb.velocity.normalized * maxSpeed;

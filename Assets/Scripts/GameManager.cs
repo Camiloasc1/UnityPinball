@@ -11,9 +11,15 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int ballCount = 3;
     private int currentBallCount = 0;
-    public UILabel highScore;
-    public UILabel currentScore;
-    public UILabel balls;
+
+    [SerializeField]
+    private UILabel highScore;
+    [SerializeField]
+    private UILabel currentScore;
+    [SerializeField]
+    private UILabel balls;
+    [SerializeField]
+    private String file;
 
     public int Score
     {
@@ -50,19 +56,18 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public void StartGame()
     {
+        Score = 0;
         BallCount = ballCount;
     }
 
     public void EndGame()
     {
-        string conn = "URI=file:" + Application.dataPath + "/Scores.db"; //Path to database.
-        IDbConnection dbconn;
-        dbconn = (IDbConnection)new SqliteConnection(conn);
+        string conn = "URI=file:" + Application.dataPath + "/" + file; //Path to database.
+        IDbConnection dbconn = new SqliteConnection(conn);
         dbconn.Open(); //Open connection to the database.
         IDbCommand dbcmd = dbconn.CreateCommand();
         dbcmd.CommandText = "INSERT INTO `Scores` VALUES (" + Score + ");";
@@ -70,19 +75,19 @@ public class GameManager : MonoBehaviour
         dbcmd.Dispose();
         dbconn.Close();
 
-        Score = 0;
+        foreach (Transform t in transform)
+            GameObject.Destroy(t.gameObject);
 
         UpdateHighScore();
     }
 
     private void UpdateHighScore()
     {
-        string conn = "URI=file:" + Application.dataPath + "/Scores.db"; //Path to database.
-        IDbConnection dbconn;
-        dbconn = (IDbConnection)new SqliteConnection(conn);
+        string conn = "URI=file:" + Application.dataPath + "/" + file; //Path to database.
+        IDbConnection dbconn = new SqliteConnection(conn);
         dbconn.Open(); //Open connection to the database.
         IDbCommand dbcmd = dbconn.CreateCommand();
-        dbcmd.CommandText = "SELECT max(score)" + "FROM Scores";
+        dbcmd.CommandText = "SELECT max(score) FROM Scores";
         IDataReader reader = dbcmd.ExecuteReader();
         reader.Read();
         int value = reader.GetInt32(0);

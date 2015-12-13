@@ -11,7 +11,9 @@ public class PlayerController : MonoBehaviour
     private float speed = 1.0f;
     [SerializeField]
     private Vector3 spawnPos;
-    public GameObject sphere;
+    [SerializeField]
+    private GameObject sphere;
+
     private Vector3 leftRot;
     private Vector3 rightRot;
     private Vector3 leftTarget;
@@ -39,8 +41,7 @@ public class PlayerController : MonoBehaviour
         tRight = Mathf.Clamp01(tRight);
         leftFlipper.transform.localEulerAngles = Vector3.Slerp(leftRot, leftTarget, tLeft);
         rightFlipper.transform.localEulerAngles = Vector3.Slerp(rightRot, rightTarget, tRight);
-        GameManager gm = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
-        if (Input.GetKeyDown(KeyCode.Space) && transform.childCount == 0 && gm.BallCount > 0)
+        if (Input.GetKeyDown(KeyCode.Space) && transform.childCount == 0 && GameObject.FindWithTag("GameController").GetComponent<GameManager>().BallCount > 0)
         {
             GameObject ball = GameObject.Instantiate(sphere);
             ball.transform.parent = transform;
@@ -48,8 +49,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            foreach (Transform t in transform)
-                GameObject.Destroy(t.gameObject);
+            GameManager gm = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
             gm.EndGame();
             gm.StartGame();
         }
