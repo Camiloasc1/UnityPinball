@@ -8,6 +8,8 @@ public class BumperBehavior : MonoBehaviour
     private float multiplier = 1.0f;
     [SerializeField]
     private float lightFlash = 0.1f;
+    [SerializeField]
+    private int points = 1;
 
     // Use this for initialization
     void Start()
@@ -26,6 +28,7 @@ public class BumperBehavior : MonoBehaviour
             other.gameObject.GetComponent<Rigidbody>().velocity *= multiplier;
             SetLights(true);
             StartCoroutine(TurnOff());
+            GameObject.FindWithTag("GameController").GetComponent<GameManager>().Score += points;
         }
     }
 
