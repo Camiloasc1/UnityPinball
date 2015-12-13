@@ -39,11 +39,19 @@ public class PlayerController : MonoBehaviour
         tRight = Mathf.Clamp01(tRight);
         leftFlipper.transform.localEulerAngles = Vector3.Slerp(leftRot, leftTarget, tLeft);
         rightFlipper.transform.localEulerAngles = Vector3.Slerp(rightRot, rightTarget, tRight);
-        if (Input.GetKeyDown(KeyCode.Space) && transform.childCount == 0 && GameObject.FindWithTag("GameController").GetComponent<GameManager>().BallCount > 0)
+        GameManager gm = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+        if (Input.GetKeyDown(KeyCode.Space) && transform.childCount == 0 && gm.BallCount > 0)
         {
             GameObject ball = GameObject.Instantiate(sphere);
             ball.transform.parent = transform;
             ball.transform.localPosition = spawnPos;
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            foreach (Transform t in transform)
+                GameObject.Destroy(t.gameObject);
+            gm.EndGame();
+            gm.StartGame();
         }
     }
 }
