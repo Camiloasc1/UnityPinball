@@ -8,6 +8,7 @@ public class BumperBehavior : MonoBehaviour
     private float multiplier = 1.0f;
     [SerializeField]
     private float lightFlash = 0.1f;
+
     // Use this for initialization
     void Start()
     {
@@ -20,10 +21,9 @@ public class BumperBehavior : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        GameObject otherGameObject = other.gameObject;
-        if (otherGameObject.CompareTag("Ball"))
+        if (other.gameObject.CompareTag("Ball"))
         {
-            otherGameObject.GetComponent<Rigidbody>().velocity *= multiplier;
+            other.gameObject.GetComponent<Rigidbody>().velocity *= multiplier;
             SetLights(true);
             StartCoroutine(TurnOff());
         }

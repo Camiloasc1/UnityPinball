@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-
     [SerializeField]
     private GameObject leftFlipper;
     [SerializeField]
