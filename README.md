@@ -1,2 +1,4 @@
-# UnityPinball
-A simple pinball game in Unity
+Unity Pinball
+=======================================
+A simple pinball game made in Unity 3D.
+
